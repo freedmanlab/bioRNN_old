@@ -72,12 +72,20 @@ class bioRNN_Cell(tf.keras.layers.AbstractRNNCell):
         """
         Sample weights from Gamma distribution, then prune according to
         connection_prob.
+
+        - dims: [num_row, num_col] for weight matrix
+        - connection_prob: scalar in [0,1]
+        - shape_param, scale_param are parameters for the Gamma distribution
         """
         w_ = np.random.gamma(shape_param, scale=scale_param, size=dims)
         prune_mask = (np.random.uniform(size=dims) < connection_prob)
         return w_ * prune_mask
 
     def build(self, input_shape):
+        """
+        This is called under the hood when Keras uses this layer in a model.
+        input_shape is figured out automatically.
+        """
         _w_in = self._sample_weights([input_shape[-1], self.n_hidden],
             self.input_connection_prob, shape_param=0.2)
 
@@ -108,7 +116,9 @@ class bioRNN_Cell(tf.keras.layers.AbstractRNNCell):
         """
         Update synaptic plasticity if on.
         Update and return hidden state (and synaptic plasticity vals).
-        Each state matrix has shape [batch_size, n_hidden].
+
+        - Input has shape [batch, n_input]
+        - Each state matrix has shape [batch_size, n_hidden].
         """
         h, syn_x, syn_u = state
         if self.synapse_config is not None:

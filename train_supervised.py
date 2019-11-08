@@ -9,8 +9,8 @@ def train_step(model, opt, x, y_true, mask=None):
     """
     Args:
     - model: Keras model
-    - x: (T, B, dim)
-    - y_true: (T, B, dim)
+    - x: (T, B, n_input)
+    - y_true: (T, B, n_pol)
     """
     with tf.GradientTape() as tape:
         logits_seq, h_seq = do_trial(model, x)
