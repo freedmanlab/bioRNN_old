@@ -24,7 +24,7 @@ def build_model(n_hidden, n_output, EI=True, excitatory_frac=0.8,
 @tf.function
 def do_trial(model, x):
     """
-    x has shape (Time, Batch, input_dim)
+    x has shape (Tsteps, Batch, n_input)
     """
     tsteps = x.shape[0]
     batch_size = x.shape[1]
