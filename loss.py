@@ -24,7 +24,7 @@ def compute_loss(y_true, y_logits, h=None, w_rnn=None, mask=None, loss_norm=2,
 
     len_mask = tf.math.count_nonzero(mask[:,0])
     preds = tf.math.argmax(y_logits, axis=2) # (T, B)
-    preds = tf.one_hot(preds, par['n_output'], axis=-1) # (T, B, n_pol)
+    preds = tf.one_hot(preds, y_true.shape[2], axis=-1) # (T, B, n_pol)
     mask = tf.expand_dims(mask, axis=-1)
     count_true = tf.math.count_nonzero(mask*preds*y_true, axis=-1) # (T, B)
     acc = tf.reduce_mean(tf.reduce_sum(count_true, axis=0)/len_mask)

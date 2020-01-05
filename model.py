@@ -2,14 +2,14 @@ import tensorflow as tf
 from layers import bioRNN_Cell
 from parameters import par
 
-def build_model(n_hidden, n_output, EI=True, excitatory_frac=0.8,
+def build_model(n_input, n_hidden, n_output, EI=True, excitatory_frac=0.8,
     balance_EI=True, connection_prob=1., synapse_config='full', n_receptive_fields=1.,
     dt=10, tau_slow=1500., tau_fast=200., membrane_time_constant=100.,
     noise_rnn_sd=0.5, **kwargs):
     """
     Builds a Keras model using the Functional API which uses bioRNN_Cell
     """
-    obs_input = tf.keras.layers.Input(shape=[par['n_input'],], name='obs_input')
+    obs_input = tf.keras.layers.Input(shape=[n_input,], name='obs_input')
     h_input = tf.keras.layers.Input(shape=[n_hidden,], name='h_input')
     syn_x_input = tf.keras.layers.Input(shape=[n_hidden,], name='syn_x_input')
     syn_u_input = tf.keras.layers.Input(shape=[n_hidden,], name='syn_u_input')

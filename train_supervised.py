@@ -1,7 +1,6 @@
 import tensorflow as tf
 from model import do_trial
 from loss import compute_loss
-from parameters import par
 import stimulus
 
 @tf.function

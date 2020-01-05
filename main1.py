@@ -13,7 +13,7 @@ if len(gpus) > 0 and len(sys.argv) > 1:
     tf.config.experimental.set_visible_devices(gpus[int(sys.argv[1])], 'GPU')
 
 n_hidden = 256
-model = build_model(n_hidden, par['n_output'], connection_prob=0.8)
+model = build_model(par['n_input'], n_hidden, par['n_output'], connection_prob=0.8)
 opt = tf.keras.optimizers.Adam(learning_rate=1e-3)
 
 train_loop(model, opt, 'dmc', 2000)
